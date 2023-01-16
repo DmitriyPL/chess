@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useContext } from 'react';
+import { Fragment, useEffect, useContext, useCallback } from 'react';
 import { GameState } from '../context/gameContext';
 import CellComponent from './CellComponent';
 
@@ -7,18 +7,22 @@ function BoardComponent() {
     board, selectedCell, setBoard,
   } = useContext(GameState);
 
-  const updateBoard = () => {
+  const updateBoard = useCallback(
+    () => {
     setBoard(board.getCopyBoard());
-  };
+  }, [board, setBoard]);
 
-  const highlightCells = () => {
-    board.highlightCells(selectedCell);
-  };
+  const highlightCells = useCallback(
+    () => {
+      board.highlightCells(selectedCell);
+    },
+    [selectedCell, board],
+  );
 
   useEffect(() => {
     highlightCells();
     updateBoard();
-  }, [selectedCell]);
+  }, [selectedCell, highlightCells, updateBoard]);
 
   return (
     <div>
