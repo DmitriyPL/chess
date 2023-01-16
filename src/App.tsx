@@ -1,25 +1,77 @@
-import React from 'react';
-import logo from './logo.svg';
+import { useEffect, useMemo, useCallback } from 'react';
 import './App.css';
+import BoardComponent from './components/BoardComponent';
+import LostFigures from './components/LostFigures';
+import { GameState } from './context/gameContext';
+import Timer from './components/Timer';
+import useGame from './hook/game.hook';
+import Board from './models/Board';
 
 function App() {
+  const {
+    board,
+    selectedCell,
+    whitePlayer,
+    blackPlayer,
+    currentPlayer,
+    setBoard,
+    setSelectedCell,
+    setWhitePlayer,
+    setBlackPlayer,
+    setCurrentPlayer,
+  } = useGame();
+
+  // const restart = () => {
+  //   const newBoard = new Board();
+  //   newBoard.initBoard();
+  //   newBoard.addFigures();
+  //   setBoard(newBoard);
+  // };
+
+  const restart = useCallback(() => {
+    const newBoard = new Board();
+    newBoard.initBoard();
+    newBoard.addFigures();
+    setBoard(newBoard);
+  }, [setBoard]);
+
+  useEffect(() => {
+    restart();
+    setCurrentPlayer(whitePlayer);
+  }, [restart, setCurrentPlayer, whitePlayer]);
+
+  const value = useMemo(() => ({
+    board,
+    selectedCell,
+    whitePlayer,
+    blackPlayer,
+    currentPlayer,
+    setBoard,
+    setSelectedCell,
+    setWhitePlayer,
+    setBlackPlayer,
+    setCurrentPlayer,
+  }), [board, selectedCell, whitePlayer, blackPlayer, currentPlayer,
+    setBoard, setSelectedCell, setWhitePlayer, setBlackPlayer, setCurrentPlayer]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <GameState.Provider value={value}>
+      <div className="app">
+        <Timer
+          currentPlayer={currentPlayer}
+          restart={restart}
+        />
+        <div>
+          <LostFigures
+            figures={board.lostWhiteFigure}
+          />
+          <BoardComponent />
+          <LostFigures
+            figures={board.lostBlackFigure}
+          />
+        </div>
+      </div>
+    </GameState.Provider>
   );
 }
 

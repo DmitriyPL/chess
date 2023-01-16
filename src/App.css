@@ -1,38 +1,95 @@
-.App {
-  text-align: center;
+
+.app {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: lightgray;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.board {
+    width: calc(64px * 8);
+    height: calc(64px * 8);
+    display: flex;
+    flex-wrap: wrap;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.timer {
+    font-family: var(--font-base);
+    margin-right: 30px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.timer__button {
+    font-family: var(--font-base);
+    background-color: blueviolet;
+    width: 110px;
+    height: 30px;
+    border-radius: 5px;
+    margin-bottom: 30px;
 }
 
-.App-link {
-  color: #61dafb;
+.currentTimer {
+    background-color: brown;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.cell {
+    width: 64px;
+    height: 64px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cell img {
+    width: 60px;
+    height: 60px;
+    position: relative;
+}
+
+.black {
+    background-image: url("./assets/background-black.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.white {
+    background-image: url("./assets/background-white.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.selected {
+    background-image: url("./assets/background-selected.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.available {
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    background-color: green;
+}
+
+.available-to-eat {
+    background-image: url("./assets/background-can-eat.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.lostFigures {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.emptyFigure {
+    height: 35px;
+}
+
+.lostFigures img {
+    width: 30px;
+    height: 30px;
 }
